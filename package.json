@@ -1,0 +1,18 @@
+{
+  "name": "learning",
+  "version": "1.0.0",
+  "description": "",
+  "main": "type.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsc type.ts --outDir build/ && node build/type.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.8.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3"
+  }
+}
