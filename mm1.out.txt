@@ -10,6 +10,6 @@ Average delay in queue 11.3f minutes
 
  Server utilization 15.3f 
 
- 460 
+ 0 
 
- Time Simulation ended in 12.3f minutes 0ined
+ Time Simulation ended in 12.3f minutes 0

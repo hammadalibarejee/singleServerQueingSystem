@@ -7,11 +7,12 @@ var Q_Limit = 100; // limit of queue length
 var busy = 1;
 var idle = 0;
 var time_arrival = [];
-var next_event_type, num_custs_delayed, num_events, num_in_q, server_status;
-var area_num_in_q, area_server_status, mean_interarrival, mean_service, sim_time;
+var next_event_type = 0, num_custs_delayed, num_events, num_in_q, server_status;
+var area_num_in_q, area_server_status, mean_interarrival = 1.3, mean_service, sim_time = 0;
 var time_last_event, total_of_delays;
 var time_next_event = [];
 var num_delays_required = 1;
+
 var writeFileFunc = function (fileName, Message) {
     fs.writeFile(fileName, Message, function (err) {
         if (err) {
@@ -30,14 +31,20 @@ var writeFileFunc = function (fileName, Message) {
     });
 };
 function reportGenerator() {
-    writeFileFunc("mm1.out.txt", "\n\nAverage delay in queue 11.3f minutes \n\n ".concat(total_of_delays != undefined ? process.env.delay : total_of_delays / num_custs_delayed, " \n\n Average number in queue 10.3f \n\n ").concat(area_server_status != undefined ? process.env.areaStatus : area_server_status / sim_time, " \n\n Server utilization 15.3f \n\n ").concat(area_num_in_q !== undefined ? process.env.areainNum : area_num_in_q / sim_time, " \n\n Time Simulation ended in 12.3f minutes ").concat(sim_time));
+    writeFileFunc("mm1.out.txt", "\n\nAverage delay in queue 11.3f minutes \n\n ".concat(total_of_delays != undefined ? process.env.delay : total_of_delays / num_custs_delayed, " \n\n Average number in queue 10.3f \n\n ").concat(
+    // area_server_status  != undefined ? process.env.areaStatus : area_server_status / sim_time
+    area_server_status != undefined ? process.env.areaStatus : area_server_status / sim_time, " \n\n Server utilization 15.3f \n\n ").concat(
+    // area_num_in_q !== undefined  ? process.env.areainNum :area_num_in_q / sim_time
+    sim_time == 0 ? 0 : area_num_in_q / sim_time, " \n\n Time Simulation ended in 12.3f minutes ").concat(sim_time));
 }
 function update_time_Avg_stats() {
     var time_since_last_event;
-    var newLocal = time_since_last_event = sim_time - time_last_event;
+    time_since_last_event = sim_time - time_last_event;
     time_last_event = sim_time;
     area_num_in_q += num_in_q * time_since_last_event;
-    area_server_status += server_status * time_since_last_event;
+    // area_server_status = server_status * time_since_last_event;
+    console.log(sim_time, time_since_last_event, area_num_in_q, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+    area_server_status = server_status;
 }
 function timing() {
     var i;
@@ -114,8 +121,8 @@ var mainFunction = function () {
     var outFile = writeFileFunc("mm1.out.txt", "");
     num_events = 2;
     var infile, outfile;
-    console.log(mean_interarrival, "maen----------------");
-    writeFileFunc("mm1.in.txt", "".concat(mean_interarrival == undefined ? process.env.meanInterval : mean_interarrival, " , ").concat(mean_service == undefined ? process.env.meanSevice : mean_service, " ,").concat(num_delays_required));
+    // writeFileFunc("mm1.in.txt", `${mean_interarrival == undefined ? process.env.meanInterval : mean_interarrival  } , ${mean_service == undefined ? process.env.meanSevice : mean_service} ,${num_delays_required}`);
+    writeFileFunc("mm1.in.txt", "".concat(mean_interarrival, " , ").concat(mean_service == undefined ? process.env.meanSevice : mean_service, " ,").concat(num_delays_required));
     writeFileFunc("mm1.out.txt", "\n\nAverage delay in queue 11.3f minutes \n\n ".concat(total_of_delays / num_custs_delayed, " \n\n Average number in queue 10.3f \n\n ").concat(area_num_in_q / sim_time, " \n\n Server utilization 15.3f \n\n ").concat(area_num_in_q / sim_time, " \n\n Time Simulation ended in 12.3f minutes ").concat(sim_time));
     initialize();
     timing();

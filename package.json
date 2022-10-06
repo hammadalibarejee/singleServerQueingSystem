@@ -5,7 +5,7 @@
   "main": "type.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsc type.ts --outDir build/ && node build/type.js"
+    "start": " tsc type.ts --outDir build/ && node build/type.js"
   },
   "author": "",
   "license": "ISC",
